@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "784514615175",
+    "firebase_url": "https://firesp32-e32221274-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "firesp32-e32221274",
+    "storage_bucket": "firesp32-e32221274.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784514615175:android:9c73b59835345911de3522",
+        "android_client_info": {
+          "package_name": "com.iot_aquarium.iot_aquarium"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNZcOJ-6ZSErhkO5l2Ll68DfIv0ihx0jY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

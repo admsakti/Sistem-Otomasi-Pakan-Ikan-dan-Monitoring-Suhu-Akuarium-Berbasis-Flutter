@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AquaMatic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body onload="getTimer()">
+    <div class="header_wave">
+      <h2>Monitoring Suhu Akuarium & Otomasi Pakan Ikan</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#00B8FF" fill-opacity="1" d="M0,288L13.3,256C26.7,224,53,160,80,138.7C106.7,117,133,139,160,160C186.7,181,213,203,240,176C266.7,149,293,75,320,74.7C346.7,75,373,149,400,176C426.7,203,453,181,480,186.7C506.7,192,533,224,560,250.7C586.7,277,613,299,640,282.7C666.7,267,693,213,720,197.3C746.7,181,773,203,800,197.3C826.7,192,853,160,880,128C906.7,96,933,64,960,90.7C986.7,117,1013,203,1040,229.3C1066.7,256,1093,224,1120,202.7C1146.7,181,1173,171,1200,170.7C1226.7,171,1253,181,1280,197.3C1306.7,213,1333,235,1360,250.7C1386.7,267,1413,277,1427,282.7L1440,288L1440,0L1426.7,0C1413.3,0,1387,0,1360,0C1333.3,0,1307,0,1280,0C1253.3,0,1227,0,1200,0C1173.3,0,1147,0,1120,0C1093.3,0,1067,0,1040,0C1013.3,0,987,0,960,0C933.3,0,907,0,880,0C853.3,0,827,0,800,0C773.3,0,747,0,720,0C693.3,0,667,0,640,0C613.3,0,587,0,560,0C533.3,0,507,0,480,0C453.3,0,427,0,400,0C373.3,0,347,0,320,0C293.3,0,267,0,240,0C213.3,0,187,0,160,0C133.3,0,107,0,80,0C53.3,0,27,0,13,0L0,0Z"></path></svg>    </div>
+    <!-- Menampilkan Suhu Air -->
+    <div class="card">
+      <p><span class="labels">Suhu Akuarium</span></p>
+      <p><span id="temperature">%TEMP%</span><sup class="units">&deg;C</sup></p>
+    </div>
+    <hr>
+    <!-- Set Timer -->
+    <div class="card">
+      <p><span class="labels">Set Timer</span></p>
+      <div>
+        <label for="timerA">Timer A:</label>
+        <input class="time" type="time" id="timerA">
+      </div>
+      <div>
+        <label for="timerA">Timer B:</label>
+        <input class="time" type="time" id="timerB">
+      </div>
+      <div>
+        <label for="timerA">Timer C:</label>
+        <input class="time" type="time" id="timerC">
+      </div>
+      <span id="DataTimer" style="visibility: hidden;">%TIMER%</span>
+      <br>
+      <button class="button" onclick="kirimTimer()">Update</button>
+    </div>
+    <hr>
+    <!-- Katup Manual -->
+    <div class="card">
+      <p><span class="labels">Beri Pakan Manual</span></p>
+      <button class="button" onclick="bukaKatup()">Buka Katup</button>
+    </div>
+    <hr>
+    <!-- Snackbar -->
+    <div id="snackbar"></div>
+  </body>
+  <script>
+    function getTimer() {
+    var strTimer = document.getElementById('DataTimer').innerHTML;
+    var arrTimer = strTimer.split(";");
+    // console.log(arrGetTimer);
+
+    var timerA = document.getElementById('timerA');
+    timerA.value = arrTimer[0];
+    var timerB = document.getElementById('timerB');
+    timerB.value = arrTimer[1];
+    var timerC = document.getElementById('timerC');
+    timerC.value = arrTimer[2];
+    }
+    
+
+    // Fungsi Buka Katup Manual
+    function bukaKatup() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var snackbar = document.getElementById("snackbar");
+          snackbar.innerHTML = this.responseText;
+          snackbar.className = "show";
+          setTimeout(function() {snackbar.className = snackbar.className.replace("show", "");}, 3000);
+        }
+      };
+      xhttp.open("GET", "/buka_katup", true);
+      xhttp.send();
+    }
+
+    // Fungsi Send dan Get Waktu Timer
+    function kirimTimer() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var snackbar = document.getElementById("snackbar");
+          snackbar.innerHTML = this.responseText;
+          snackbar.className = "show";
+          setTimeout(function() {snackbar.className = snackbar.className.replace("show", "");}, 3000);
+        }
+      };
+
+      var timerA = document.getElementById('timerA');
+      var timerB = document.getElementById('timerB');
+      var timerC = document.getElementById('timerC');
+
+      var arrAllTimer = [timerA.value, timerB.value, timerC.value];
+      var strTimer = arrAllTimer.join(";");
+
+      var url = "/timer_pakan?timer=";
+      xhttp.open("GET", url.concat(strTimer), true);
+      xhttp.send();
+    }
+
+    // Fungsi Update Suhu Dengan Interval 10sekon
+    setInterval(function() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("temperature").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/temperature", true);
+      xhttp.send();
+    }, 10000);
+  </script>
+</html>

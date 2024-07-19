@@ -1,0 +1,23 @@
+keytool -list -v -alias androiddebugkey -keystore C:\Users\Administrator\.android\debug.keystore
+pass: android
+
+  SHA1:
+5C:BD:5A:E6:00:B6:D5:37:F6:68:E3:E2:F9:40:8B:64:2B:8A:25:78
+
+  SHA256:
+C1:DC:25:08:01:0F:60:ED:DD:3F:DC:3B:F1:EE:47:3B:14:D2:4A:76:B9:55:AA:4F:E7:45:DE:5B:A9:75:4B:EC
+
+Platform  Firebase App Id
+web       1:784514615175:web:f656a2495ba62632de3522
+android   1:784514615175:android:9c73b59835345911de3522
+ios       1:784514615175:ios:37856ae844720aa2de3522
+macos     1:784514615175:ios:a895c9d8ae19fb74de3522
+
+
+Flutter run key commands.
+r Hot reload.
+R Hot restart.
+h List all available interactive commands.
+d Detach (terminate "flutter run" but leave application running).
+c Clear the screen.
+q Quit (terminate the application on the device).
